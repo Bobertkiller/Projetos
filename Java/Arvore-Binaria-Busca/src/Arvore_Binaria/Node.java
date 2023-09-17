@@ -93,10 +93,15 @@ public class Node {
     public String toString(){
         return "Data: " + data + ", Parent: " + (parent != null ? parent.getdata() : "null") 
                + ", Esquerda: " + (left != null ? left.getdata() : "null" )
-               + ", Direita: " + (right != null ? right.getdata() : "null" );
+               + ", Direita: " + (right != null ? right.getdata() : "null" )
+               + ", Raiz? " + isRoot() 
+               + ", Folha? " + isLeaf()
+               + ", Grau: " + getDegree()
+               + ", Nivel: " + getLevel()
+               + ", Altura: " + getHeight();
+               
     }
 
-   
 
 
 }
