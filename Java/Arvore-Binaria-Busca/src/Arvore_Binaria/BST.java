@@ -159,6 +159,7 @@ public class BST extends BinaryTree{
     }
 
     public void clear() {
-        root = null;
+         root = null;
     }
+
 }
