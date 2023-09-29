@@ -3,6 +3,7 @@ import java.util.Scanner;
 import Arvore_mat.ArvoreAritimetica;
 import Arvore_mat.BinaryTree;
 import misc.Valida;
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
