@@ -85,4 +85,13 @@ public class ArvoreAritimetica {
             return null;
         }
     }
+
+    public static float calcularExpressao(BinaryTree arvore) {
+        if (arvore != null && arvore.getroot() != null) {
+            Node raiz = arvore.getroot();
+            return raiz.visitar();
+        } else {
+            throw new IllegalArgumentException("Árvore vazia ou inválida.");
+        }
+    }
 }
