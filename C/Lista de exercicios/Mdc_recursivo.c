@@ -19,7 +19,7 @@ int MDC(int x,int y){
     else if((x%2) == 1 && (y%2) == 1 && x < y){
         return MDC(x,(y-x)/2);
     }
-
+    return 0;
 }
 
 int main(void){
