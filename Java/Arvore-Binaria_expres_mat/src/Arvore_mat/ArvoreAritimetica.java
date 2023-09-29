@@ -10,7 +10,7 @@ public class ArvoreAritimetica {
         expressao = expressao.replaceAll("\\s+", "");
 
         // Pilha para operadores
-        Stack<Node> pilhaOperadores = new Stack<>();
+        Stack<Operador> pilhaOperadores = new Stack<>();
         // Pilha para operandos
         Stack<Node> pilhaOperandos = new Stack<>();
 
@@ -26,13 +26,13 @@ public class ArvoreAritimetica {
                 }
                 String numero = expressao.substring(startIndex, index);
                 float valor = Float.parseFloat(numero);
-                Node operando = new Operando(valor);
+                Operando operando = new Operando(valor);
                 pilhaOperandos.push(operando);
             } else if ("+-*/".indexOf(caractere) != -1) {
                 // Se for um operador, crie um nó operador e gerencie a pilha de operadores
-                Node operador = new Operador(caractere);
-                while (!pilhaOperadores.isEmpty() && getPrioridade(pilhaOperadores.peek().getdata().charAt(0)) >= prioridade(operador.getdata().charAt(0))) {
-                    Node operadorTopo = pilhaOperadores.pop();
+                Operador operador = new Operador(caractere);
+                while (!pilhaOperadores.isEmpty() && pilhaOperadores.peek().getPrioridade() >= operador.getPrioridade()) {
+                    Operador operadorTopo = pilhaOperadores.pop();
                     Node direita = pilhaOperandos.pop();
                     Node esquerda = pilhaOperandos.pop();
                     operadorTopo.setleft(esquerda);
@@ -47,15 +47,15 @@ public class ArvoreAritimetica {
                 index++;
             } else if (caractere == ')') {
                 // Se for um parêntese de fechamento, desempilhe operadores até encontrar o parêntese de abertura correspondente
-                while (!pilhaOperadores.isEmpty() && pilhaOperadores.peek().getdata().charAt(0) != '(') {
-                    Node operadorTopo = pilhaOperadores.pop();
+                while (!pilhaOperadores.isEmpty() && !pilhaOperadores.peek().getdata().equals("(")) {
+                    Operador operadorTopo = pilhaOperadores.pop();
                     Node direita = pilhaOperandos.pop();
                     Node esquerda = pilhaOperandos.pop();
                     operadorTopo.setleft(esquerda);
                     operadorTopo.setright(direita);
                     pilhaOperandos.push(operadorTopo);
                 }
-                if (!pilhaOperadores.isEmpty() && pilhaOperadores.peek().getdata().charAt(0) == '(') {
+                if (!pilhaOperadores.isEmpty() && pilhaOperadores.peek().getdata().equals("(")) {
                     pilhaOperadores.pop(); // Remova o parêntese de abertura correspondente
                 } else {
                     return null; // Parênteses desbalanceados
@@ -68,7 +68,7 @@ public class ArvoreAritimetica {
 
         // Processar operadores restantes na pilha
         while (!pilhaOperadores.isEmpty()) {
-            Node operadorTopo = pilhaOperadores.pop();
+            Operador operadorTopo = pilhaOperadores.pop();
             Node direita = pilhaOperandos.pop();
             Node esquerda = pilhaOperandos.pop();
             operadorTopo.setleft(esquerda);
@@ -78,7 +78,8 @@ public class ArvoreAritimetica {
 
         // A pilha de operandos agora contém a árvore da expressão
         if (!pilhaOperandos.isEmpty()) {
-            BinaryTree arvore = new BinaryTree(pilhaOperandos.pop());
+            BinaryTree arvore = new BinaryTree();
+            arvore.setroot(pilhaOperandos.pop());
             return arvore;
         } else {
             return null;
