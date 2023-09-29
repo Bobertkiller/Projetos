@@ -1,12 +1,13 @@
 package Arvore_mat;
 
-public class operando extends Node {
+public class Operando extends Node {
     private float num;
 
-    public operando(String data, float num){
-        super(data);
+    public Operando(float num) {
+        super(Float.toString(num)); // Converte o valor float para string
         this.num = num;
     }
+    
     
     @Override
     public float visitar() {

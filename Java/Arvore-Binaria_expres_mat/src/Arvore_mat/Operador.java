@@ -1,11 +1,25 @@
 package Arvore_mat;
 
-public class operador extends Node{
+public class Operador extends Node{
     private char op; // Campo para armazenar o operador.
 
-    public operador(char op) {
+    public Operador(char op) {
         super(String.valueOf(op)); // Define o operador como a representação textual do nó.
         this.op = op;
+    }
+
+    public int getPrioridade() {
+        // Defina a prioridade dos operadores com base em suas regras.
+        switch (op) {
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            default:
+                return 0; // Valor padrão para operadores não reconhecidos.
+        }
     }
 
     @Override
