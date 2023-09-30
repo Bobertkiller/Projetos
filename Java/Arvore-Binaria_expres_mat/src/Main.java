@@ -80,6 +80,7 @@ public class Main {
 
                 default:
                     System.out.println("Deu ruim, Insira um numero valido");
+                    break;
 
             }
         }
