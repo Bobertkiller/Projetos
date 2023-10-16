@@ -4,24 +4,25 @@
 package Avl;
 
 public class Node {
-    private String data;
+    private int data;
     private Node parent;
     private Node left;
     private Node right;
+    private int balanceFactor; // Novo atributo para o fator de balanceamento
 
-   
-    public Node(String data){
+    public Node(int data){
         this.data = data;
         this.parent = null;
         this.left = null;
         this.right = null;
+        this.balanceFactor = 0; // Inicialmente, o fator de balanceamento é 0
     }
 
-    public String getdata(){
+    public int getdata(){
         return data;
     }
 
-    public void setdata(String data){
+    public void setdata(int data){
         this.data = data;
     }
 
@@ -88,20 +89,28 @@ public class Node {
         return Math.max(leftHeight, rightHeight);
     }
 
+    // Novo método público para obter o fator de balanceamento
+    public int getBalanceFactor() {
+        return balanceFactor;
+    }
+
+    // Novo método privado para atualizar o fator de balanceamento
+    private void updateBalanceFactor() {
+        int leftHeight = (left != null) ? left.getHeight() : 0;
+        int rightHeight = (right != null) ? right.getHeight() : 0;
+        balanceFactor = leftHeight - rightHeight;
+    }
 
     @Override
     public String toString(){
-        return "Data: " + data + ", Parent: " + (parent != null ? parent.getdata() : "null") 
+        return "Data: " + data + ", Parent: " + (parent != null ? parent.getdata() : "null")
                + ", Esquerda: " + (left != null ? left.getdata() : "null" )
                + ", Direita: " + (right != null ? right.getdata() : "null" )
-               + ", Raiz? " + isRoot() 
+               + ", Raiz? " + isRoot()
                + ", Folha? " + isLeaf()
                + ", Grau: " + getDegree()
                + ", Nivel: " + getLevel()
-               + ", Altura: " + getHeight();
-               
+               + ", Altura: " + getHeight()
+               + ", Balance Factor: " + balanceFactor; // Inclua o fator de balanceamento
     }
-
-
-
 }

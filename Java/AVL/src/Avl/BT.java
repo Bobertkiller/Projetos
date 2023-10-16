@@ -1,22 +1,21 @@
 package Avl;
 
-public class BT{
+public class BT {
     private Node root;
 
-
-    public BT(Node root){
-        this.root = null;
+    public BT(Node root) {
+        this.root = root;
     }
 
-    public Node getroot(){
+    public Node getroot() {
         return root;
     }
 
-    public void setroot(Node root){
+    public void setroot(Node root) {
         this.root = root;
     }
-    
-    public boolean isEmpty(){
+
+    public boolean isEmpty() {
         return root == null;
     }
 
@@ -49,10 +48,10 @@ public class BT{
     public void preOrderTraversal() {
         preOrderTraversal(root);
     }
-    
+
     private void preOrderTraversal(Node node) {
         if (node != null) {
-            System.out.print(node.getdata() + " ");  
+            System.out.print(node.getdata() + " ");
             preOrderTraversal(node.getleft());
             preOrderTraversal(node.getright());
         }
@@ -69,9 +68,9 @@ public class BT{
             System.out.print(node.getdata() + " ");
         }
     }
-    
-    
 
+    // Novo método público para obter o fator de balanceamento da raiz
+    public int getBalanceFactor() {
+        return (root != null) ? root.getBalanceFactor() : 0;
+    }
 }
-
-
