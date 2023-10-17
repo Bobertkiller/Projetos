@@ -4,7 +4,7 @@
 import Arvore_Binaria.Node;
 import Arvore_Binaria.BST;
 
-public class Main {
+public class Main2 {
 
     public static void main(String[] args) {
         // Criando a árvore binária de busca

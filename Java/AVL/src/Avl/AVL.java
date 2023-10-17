@@ -3,8 +3,8 @@ package Avl;
 public class AVL {
     private Node root;
 
-    public AVL(Node root) {
-        this.root = root;
+    public AVL() {
+        this.root = null;
     }
 
     public Node getroot() {
@@ -72,5 +72,27 @@ public class AVL {
     // Novo método público para obter o fator de balanceamento da raiz
     public int getBalanceFactor() {
         return (root != null) ? root.getBalanceFactor() : 0;
+    }
+
+    public void insert(int chave) {
+        root = insert(root, null, chave);
+    }
+    
+    private Node insert(Node node, Node parent, int chave) {
+        if (node == null) {
+            Node novoNo = new Node(chave);
+            novoNo.setparent(parent); // Configurar o nó pai
+            return novoNo;
+        }
+    
+        if (chave < node.getdata()) {
+            node.setleft(insert(node.getleft(), node, chave));
+        } else if (chave > node.getdata()) {
+            node.setright(insert(node.getright(), node, chave));
+        }
+    
+        node.updateBalanceFactor();
+    
+        return node;
     }
 }

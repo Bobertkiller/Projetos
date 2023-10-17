@@ -95,7 +95,7 @@ public class Node {
     }
 
     // Novo método privado para atualizar o fator de balanceamento
-    private void updateBalanceFactor() {
+    void updateBalanceFactor() {
         int leftHeight = (left != null) ? left.getHeight() : 0;
         int rightHeight = (right != null) ? right.getHeight() : 0;
         balanceFactor = leftHeight - rightHeight;
