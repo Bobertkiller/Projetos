@@ -1,9 +1,9 @@
 package Avl;
 
-public class AVL {
+public class BT {
     private Node root;
 
-    public AVL() {
+    public BT() {
         this.root = null;
     }
 
