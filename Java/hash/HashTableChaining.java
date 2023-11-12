@@ -1,3 +1,6 @@
+//Matteo Domiciano Varnier - 32158238
+//Felipe Mazzeo Barbosa - 32257023
+
 package hash;
 
 import java.util.LinkedList;
@@ -47,7 +50,7 @@ public class HashTableChaining implements HashTable {
             }
         }
 
-        return "Sem valor na chave"; // Chave não encontrada
+        return null; // Chave não encontrada
     }
 
     @Override
@@ -58,12 +61,12 @@ public class HashTableChaining implements HashTable {
         for (Entry entry : list) {
             if (entry.getKey() == key) {
                 entry.setValue(value);
-                return ("chave " + key + " foi atualizada para " + value);
+                return "valor da chave atualizado";
             }
         }
 
         list.add(new Entry(key, value));
-        return ("Chave "+ key + " --> " + value + " foi inserido" );
+        return "chave-valor inserido";
     }
 
     @Override
