@@ -1,4 +1,9 @@
 // Ao rodar em linux comente o windows.h
+
+//Felipe Mazzeo Barbosa TIA- 32257023
+//Matteo Domiciano Varnier TIA - 32158238
+//Daniel Reis Raske TIA - 32219441
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
