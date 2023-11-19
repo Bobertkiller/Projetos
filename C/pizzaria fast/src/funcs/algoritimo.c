@@ -1,1 +1,0 @@
-// algoritimo de Dijkstra
