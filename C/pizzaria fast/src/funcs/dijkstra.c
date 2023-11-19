@@ -5,59 +5,59 @@
 
 #define MAX_VERTICES 100
 
-// Function to find the intersection with the minimum time
-int findMinTime(int time[], int visited[], int vertices) {
+// Funcao para achar a intersecao com o menor tempo
+int tempominimo(int tempo[], int encontra[], int vertices) {
     int min = INT_MAX, minIndex;
     for (int v = 1; v <= vertices; v++) {
-        if (visited[v] == 0 && time[v] < min) {
-            min = time[v];
+        if (encontra[v] == 0 && tempo[v] < min) {
+            min = tempo[v];
             minIndex = v;
         }
     }
     return minIndex;
 }
 
-// Function to print the route from source to destination
-void printRoute(int parent[], int destination) {
-    if (parent[destination] == -1) {
-        printf("%d ", destination);
+// Funcao que printa a rota desde que a saida para o destino
+void printarota(int saida[], int destino) {
+    if (saida[destino] == -1) {
+        printf("%d ", destino);
         return;
     }
 
-    printRoute(parent, parent[destination]);
-    printf("%d ", destination);
+    printarota(saida, saida[destino]);
+    printf("%d ", destino);
 }
 
-// Dijkstra's algorithm to find the fastest route
-void dijkstra(int graph[MAX_VERTICES][MAX_VERTICES], int source, int vertices, int destination) {
-    int time[MAX_VERTICES];    // To store the time to reach each intersection
-    int visited[MAX_VERTICES]; // To mark visited intersections
-    int parent[MAX_VERTICES];  // To store the parent intersection for each intersection in the route
+// Algoritimo Dijkstra para encontrar a rota mais rapida
+void dijkstra(int graph[MAX_VERTICES][MAX_VERTICES], int local, int vertices, int destino) {
+    int tempo[MAX_VERTICES];    // To store the tempo to reach each intersection
+    int encontra[MAX_VERTICES]; // To mark encontra intersections
+    int saida[MAX_VERTICES];  // To store the saida intersection for each intersection in the route
 
-    // Initialization
+    // Inicializa
     for (int v = 1; v <= vertices; v++) {
-        time[v] = INT_MAX;
-        visited[v] = 0;
-        parent[v] = -1;
+        tempo[v] = INT_MAX;
+        encontra[v] = 0;
+        saida[v] = -1;
     }
-    time[source] = 0;
+    tempo[local] = 0;
 
-    // Dijkstra's algorithm
+    // Algoritmo Dijkstra
     for (int count = 1; count < vertices; count++) {
-        int u = findMinTime(time, visited, vertices);
-        visited[u] = 1;
+        int u = tempominimo(tempo, encontra, vertices);
+        encontra[u] = 1;
 
         for (int v = 1; v <= vertices; v++) {
-            if (!visited[v] && graph[u][v] && time[u] != INT_MAX &&
-                time[u] + graph[u][v] < time[v]) {
-                time[v] = time[u] + graph[u][v];
-                parent[v] = u;
+            if (!encontra[v] && graph[u][v] && tempo[u] != INT_MAX &&
+                tempo[u] + graph[u][v] < tempo[v]) {
+                tempo[v] = tempo[u] + graph[u][v];
+                saida[v] = u;
             }
         }
     }
 
-    // Print the route and time for the destination
-    printf("Fastest route from %d to %d: ", source, destination);
-    printRoute(parent, destination);
-    printf("\nTime: %d minutes\n", time[destination]);
+    // Printa a rota e o tempo ate o destino
+    printf("Rota mais rapida de  %d ate %d: ", local, destino);
+    printarota(saida, destino);
+    printf("\ntempo: %d minuto\n", tempo[destino]);
 }

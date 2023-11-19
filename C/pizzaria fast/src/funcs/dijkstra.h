@@ -8,13 +8,13 @@
 #define MAX_VERTICES 100
 
 typedef struct {
-    int intersection1;
-    int intersection2;
-    int travel_time;
+    int intersecao1;
+    int intersecao2;
+    int tempo_de_trajeto;
 } Triple;
 
-void dijkstra(int graph[MAX_VERTICES][MAX_VERTICES], int source, int vertices, int destination);
-int findMinTime(int time[], int visited[], int vertices);
-void printRoute(int parent[], int destination);
+void dijkstra(int graph[MAX_VERTICES][MAX_VERTICES], int local, int vertices, int destino);
+int tempominimo(int tempo[], int encontra[], int vertices);
+void printarota(int saida[], int destino);
 
-#endif /* DIJKSTRA_H */
+#endif

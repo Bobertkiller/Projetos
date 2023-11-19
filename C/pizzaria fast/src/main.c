@@ -6,27 +6,22 @@
 #define MAX_VERTICES 100
 
 int main() {
-    int delivery_intersection, total_intersections;
+    int intersecao_entrega, intersecao_total;
     Triple *triples;
     int num_triples;
 
-    // Read input file
-    read_input_file("assets/input.txt", &delivery_intersection, &total_intersections, &triples, &num_triples);
+    
+    read_input_file("assets/input.txt", &intersecao_entrega, &intersecao_total, &triples, &num_triples);
 
-    // Create and initialize the graph
     int graph[MAX_VERTICES][MAX_VERTICES] = {0};
     for (int i = 0; i < num_triples; i++) {
-        graph[triples[i].intersection1][triples[i].intersection2] = triples[i].travel_time;
+        graph[triples[i].intersecao1][triples[i].intersecao2] = triples[i].tempo_de_trajeto;
     }
 
-    // Set source and destination
-    int source = 1;
+    int local = 1;
    
+    dijkstra(graph, local, intersecao_total, intersecao_entrega);
 
-    // Run Dijkstra's algorithm
-    dijkstra(graph, source, total_intersections, delivery_intersection);
-
-    // Free allocated memory
     free(triples);
 
     return 0;

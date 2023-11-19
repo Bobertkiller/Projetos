@@ -2,27 +2,27 @@
 #include <stdlib.h>
 #include "file_operations.h"
 
-void read_input_file(const char *file_path, int *delivery_intersection, int *total_intersections, Triple **triples, int *num_triples) {
-    FILE *file = fopen(file_path, "r");
+void read_input_file(const char *nome_arquivo, int *intersecao_entrega, int *intersecao_total, Triple **triples, int *num_triples) {
+    FILE *file = fopen(nome_arquivo, "r");
     if (file == NULL) {
         perror("Error opening file");
         exit(EXIT_FAILURE);
     }
 
-    // Read delivery intersection
-    fscanf(file, "%d", delivery_intersection);
+    // Le a intersecao da entreha
+    fscanf(file, "%d", intersecao_entrega);
 
-    // Read total number of intersections
-    fscanf(file, "%d", total_intersections);
+    // Le o total de intersecoes
+    fscanf(file, "%d", intersecao_total);
 
-    // Read triples of intersections and travel time
+    // Le as triples da intersecao e o tempo de trajeto
     *triples = NULL;
     *num_triples = 0;
 
     while (1) {
         Triple triple;
-        int result = fscanf(file, "%d %d %d", &triple.intersection1, &triple.intersection2, &triple.travel_time);
-        if (result == EOF || result < 3) {
+        int resultado = fscanf(file, "%d %d %d", &triple.intersecao1, &triple.intersecao2, &triple.tempo_de_trajeto);
+        if (resultado == EOF || resultado < 3) {
             break;
         }
 
@@ -30,7 +30,7 @@ void read_input_file(const char *file_path, int *delivery_intersection, int *tot
         *triples = realloc(*triples, (*num_triples) * sizeof(Triple));
 
         if (*triples == NULL) {
-            perror("Error allocating memory");
+            perror("Erro de alocacao de memoria");
             exit(EXIT_FAILURE);
         }
 
