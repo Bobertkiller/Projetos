@@ -1,3 +1,7 @@
+//Felipe Mazzeo Barbosa TIA- 32257023
+//Matteo Domiciano Varnier TIA - 32158238
+//Daniel Reis Raske TIA - 32219441
+
 #ifndef DIJKSTRA_H
 #define DIJKSTRA_H
 
