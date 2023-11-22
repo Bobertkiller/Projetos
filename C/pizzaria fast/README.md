@@ -2,16 +2,21 @@
 
 # Como compilar o Codigo no arquivo ./teste
 
-1. Primeira va para a pasta scr
+1. Acesse a pasta onde foi escolhido para dar o clone do git. Use `cd` para acessar a pasta.
 
     *Exemplo* :
+    
+    `cd Documentos/Projetos/C/pizzaria fast/src`
 
-    ` cd Documentos/Projetos/C/pizzaria fast/src`
+2. Digite `gcc` para poder compilar o codigo
 
-2.  Compilar com 
+    *Exemplo*
 
-    ` gcc -o teste main.c funcs/dijkstra.c funcs/file_operations.c ` 
+    `gcc -o teste main.c funcs/dijkstra.c funcs/file_operations.c`  
 
-3. Fazer com que rode 
+
+3. Digite `./nome do arquivo` para poder rodar o codigo
+
+    *Exemplo*
 
     ` ./teste` 
