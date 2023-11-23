@@ -1,3 +1,10 @@
+"""Grupo
+- Matteo Domiciano Varnier
+- Felipe Mazzeo Barbosa
+- Daniel Reis Raske
+- Raul Vilhora Cardoso Matias
+
+"""
 import numpy as np
 
 # Definindo o espaço de estados
