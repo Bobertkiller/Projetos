@@ -9,18 +9,18 @@ class ProgramaNetflix {
     private int runtime;
     private String generos;
     private String productionCountries;
-    private int temporadas;
+    private float temporadas;
     private String imdbId;
-    private double imdbScore;
-    private int imdbVotes;
-    private double tmdbPopularity;
-    private double tmdbScore;
+    private float imdbScore;
+    private float imdbVotes;
+    private float tmdbPopularity;
+    private float tmdbScore;
 
     // Construtor
     public ProgramaNetflix(String id, String titulo, String showType, String descricao,
                            int releaseYear, String ageCertification, int runtime, String generos,
-                           String productionCountries, int temporadas, String imdbId, double imdbScore,
-                           int imdbVotes, double tmdbPopularity, double tmdbScore) {
+                           String productionCountries, float temporadas, String imdbId, float imdbScore,
+                           float imdbVotes, float tmdbPopularity, float tmdbScore) {
         this.id = id;
         this.titulo = titulo;
         this.showType = showType;
@@ -112,7 +112,7 @@ class ProgramaNetflix {
         this.productionCountries = productionCountries;
     }
 
-    public int getTemporadas() {
+    public float getTemporadas() {
         return temporadas;
     }
 
@@ -128,15 +128,15 @@ class ProgramaNetflix {
         this.imdbId = imdbId;
     }
 
-    public double getImdbScore() {
+    public float getImdbScore() {
         return imdbScore;
     }
 
-    public void setImdbScore(double imdbScore) {
+    public void setImdbScore(float imdbScore) {
         this.imdbScore = imdbScore;
     }
 
-    public int getImdbVotes() {
+    public float getImdbVotes() {
         return imdbVotes;
     }
 
@@ -144,19 +144,19 @@ class ProgramaNetflix {
         this.imdbVotes = imdbVotes;
     }
 
-    public double getTmdbPopularity() {
+    public float getTmdbPopularity() {
         return tmdbPopularity;
     }
 
-    public void setTmdbPopularity(double tmdbPopularity) {
+    public void setTmdbPopularity(float tmdbPopularity) {
         this.tmdbPopularity = tmdbPopularity;
     }
 
-    public double getTmdbScore() {
+    public float getTmdbScore() {
         return tmdbScore;
     }
 
-    public void setTmdbScore(double tmdbScore) {
+    public void setTmdbScore(float tmdbScore) {
         this.tmdbScore = tmdbScore;
     }
 }

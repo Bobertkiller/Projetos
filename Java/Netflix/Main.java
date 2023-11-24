@@ -1,6 +1,10 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -30,7 +34,7 @@ public class Main {
                     lerDadosDeArquivo(bstTree, avlTree);
                     break;
                 case 2:
-                    // Implemente lógica para análises na AVL
+                    avlTree.opcoes_analise();
                     break;
                 case 3:
                     // Implemente lógica para inserir programa
@@ -57,17 +61,54 @@ public class Main {
         } while (option != 8);
     }
 
-    private static void lerDadosDeArquivo(BST bstTree, AVL avlTree) {
-        String fileName = "/home/matteo/Documentos/Projetos/Java/Netflix/titles.csv";
+    private static String[] splitCSVLine(String line) {
+    List<String> fields = new ArrayList<>();
+    boolean aspas = false;
+    StringBuilder atual = new StringBuilder();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+    for (char c : line.toCharArray()) {
+        if (c == '"') {
+            aspas = !aspas;
+        } else if (c == ',' && !aspas) {
+            fields.add(atual.toString().trim());
+            atual.setLength(0);  // limpa o campo atual
+        } else {
+            atual.append(c);
+        }
+    }
+
+    // adiciona o campo final
+    fields.add(atual.toString().trim());
+
+    return fields.toArray(new String[0]);
+    }
+
+
+    private static void lerDadosDeArquivo(BST bstTree, AVL avlTree) {
+        String fileName = "assets/titles.csv";
+
+        try (InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(fileName);
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+
             String line;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 // Dividir a linha em campos usando a vírgula como delimitador
-                String[] fields = line.split(",");
+                String[] fields = splitCSVLine(line);
+
+                boolean taVazio = false;
+                for (String field : fields) {
+                    if (field.isEmpty()) {
+                        taVazio = true;
+                        break;
+                    }
+                }
 
                 // Verificar se há pelo menos 15 campos (os atributos mencionados)
-                if (fields.length >= 15) {
+                if (taVazio) {
+                    // Lidar com linhas que não têm informações suficientes (por exemplo, registros incompletos)
+                    System.out.println("Ignorando linha incompleta: " + line);
+                } else if(fields.length == 15) {
                     // Criar um objeto ProgramaNetflix com base nos campos
                     ProgramaNetflix programa = new ProgramaNetflix(
                             fields[0],  // id
@@ -79,24 +120,24 @@ public class Main {
                             Integer.parseInt(fields[6]),  // runtime
                             fields[7],  // generos
                             fields[8],  // productionCountries
-                            Integer.parseInt(fields[9]),  // temporadas
+                            Float.parseFloat(fields[9]),  // temporadas
                             fields[10],  // imdbId
-                            Double.parseDouble(fields[11]),  // imdbScore
-                            Integer.parseInt(fields[12]),  // imdbVotes
-                            Double.parseDouble(fields[13]),  // tmdbPopularity
-                            Double.parseDouble(fields[14])  // tmdbScore
+                            Float.parseFloat(fields[11]),  // imdbScore
+                            Float.parseFloat(fields[12]),  // imdbVotes
+                            Float.parseFloat(fields[13]),  // tmdbPopularity
+                            Float.parseFloat(fields[14])  // tmdbScore
                     );
 
                     // Inserir o objeto nas árvores BST e AVL
                     bstTree.insert(programa);
                     avlTree.insert(programa);
-                } else {
-                    // Lidar com linhas que não têm informações suficientes (por exemplo, registros incompletos)
-                    System.out.println("Ignorando linha incompleta: " + line);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    
+
 }
