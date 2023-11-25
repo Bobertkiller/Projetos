@@ -121,6 +121,16 @@ class BST {
     public int getHeight() {
         return getHeight(root);
     }
+    
+    private int getHeight(Node node) {
+        return (node != null) ? Math.max(getHeight(node.left), getHeight(node.right)) + 1 : 0;
+    }
+    
+
+
+    public int getHeight() {
+        return getHeight(root);
+    }
 
     private int getHeight(Node node) {
         return (node != null) ? Math.max(getHeight(node.left), getHeight(node.right)) + 1 : 0;
