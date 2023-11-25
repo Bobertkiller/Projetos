@@ -152,10 +152,6 @@ class ProgramaNetflix {
         this.tmdbPopularity = tmdbPopularity;
     }
 
-    public float getTmdbScore() {
-        return tmdbScore;
-    }
-
     public void setTmdbScore(float tmdbScore) {
         this.tmdbScore = tmdbScore;
     }
@@ -165,3 +161,4 @@ class ProgramaNetflix {
         return "titulo: '" + titulo + "' | Avaliação: " + imdbScore;
     }
 }
+

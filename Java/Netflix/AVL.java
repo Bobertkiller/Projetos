@@ -83,16 +83,17 @@ class AVL {
     }
 
     void exibirResultadoBusca(ProgramaNetflix programa, int comparacoes, long tempoExecucao) {
-    if (programa != null) {
-        System.out.println("Programa encontrado na AVL:");
-        System.out.println(programa);
-    } else {
-        System.out.println("Programa não encontrado na AVL.");
+        if (programa != null) {
+            System.out.println("Programa encontrado na AVL:");
+            System.out.println(programa);
+        } else {
+            System.out.println("Programa não encontrado na AVL.");
+        }
+
+        System.out.println("Número de comparações na AVL: " + comparacoes);
+        System.out.println("Tempo de execução na AVL: " + tempoExecucao + " nanosegundos");
     }
 
-    System.out.println("Número de comparações na AVL: " + comparacoes);
-    System.out.println("Tempo de execução na AVL: " + tempoExecucao + " nanosegundos");
-}
     private int getHeight(Node node) {
         return (node != null) ? node.height : 0;
     }
