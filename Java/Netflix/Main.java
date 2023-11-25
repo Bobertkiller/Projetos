@@ -107,8 +107,30 @@ public class Main {
                         System.out.println("Programa com ID " + programaId + " não encontrado em nenhuma árvore.");
                     }
                     break;
+                
                 case 5:
-                    // Implemente lógica para remover programa
+                    // Solicitar ID do usuário
+                    System.out.print("Informe o ID do programa a ser removido: ");
+                    String programaIdRemover = scanner.nextLine();
+                
+                    // Remover na AVL
+                    boolean removidoAvl = avlTree.remove(programaIdRemover);
+                
+                    // Remover na BST
+                    boolean removidoBst = bstTree.remove(programaIdRemover);
+                
+                    // Exibir resultados da remoção
+                    if (removidoAvl) {
+                        System.out.println("Programa removido com sucesso na AVL.");
+                    } else {
+                        System.out.println("Programa não encontrado na AVL ou falha ao remover.");
+                    }
+                
+                    if (removidoBst) {
+                        System.out.println("Programa removido com sucesso na BST.");
+                    } else {
+                        System.out.println("Programa não encontrado na BST ou falha ao remover.");
+                    }
                     break;
                 case 6:
                     // Implemente lógica para exibir altura das árvores

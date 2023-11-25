@@ -63,28 +63,36 @@ class AVL {
     }
 
     public ProgramaNetflix search(String id) {
-        return searchRec(root, id);
+        return searchRec(root, id,0);
     }
 
-    private ProgramaNetflix searchRec(Node root, String id) {
+    private ProgramaNetflix searchRec(Node root, String id, int comparacoes) {
         // Caso base: a árvore ou subárvore está vazia ou encontramos o nó com o ID correspondente
         if (root == null || root.programa.getId().equals(id)) {
+            comparacoes++;
             return (root != null) ? root.programa : null;
         }
-
+        
+        comparacoes++;
         // Se o ID a ser pesquisado for menor que o ID do nó atual, busca na subárvore esquerda
         if (id.compareTo(root.programa.getId()) < 0) {
-            return searchRec(root.left, id);
+            return searchRec(root.left, id,comparacoes);
         }
         // Se o ID a ser pesquisado for maior que o ID do nó atual, busca na subárvore direita
-        return searchRec(root.right, id);
+        return searchRec(root.right, id,comparacoes);
     }
 
-    // Métodos AVL adicionais conforme necessário
+    void exibirResultadoBusca(ProgramaNetflix programa, int comparacoes, long tempoExecucao) {
+    if (programa != null) {
+        System.out.println("Programa encontrado na AVL:");
+        System.out.println(programa);
+    } else {
+        System.out.println("Programa não encontrado na AVL.");
+    }
 
-    // Outros métodos AVL conforme necessário
-
-    // Métodos auxiliares para balanceamento AVL
+    System.out.println("Número de comparações na AVL: " + comparacoes);
+    System.out.println("Tempo de execução na AVL: " + tempoExecucao + " nanosegundos");
+}
     private int getHeight(Node node) {
         return (node != null) ? node.height : 0;
     }
@@ -135,6 +143,86 @@ class AVL {
             this.height = 1;
         }
     }
+    public boolean remove(String id) {
+        if (root == null) {
+            return false; // Árvore vazia, nada para remover
+        }
+        // Utilize um método auxiliar para realizar a remoção recursiva
+        root = removeRecursive(root, id);
+        return true; // Programa removido com sucesso
+    }
+    
+    private Node removeRecursive(Node current, String id) {
+        // Caso base: chegou a um nó nulo
+        if (current == null) {
+            return null;
+        }
+    
+        // Comparar o ID do programa com o ID do nó atual
+        int comparison = id.compareTo(current.programa.getId());
+    
+        // Caso o ID seja menor, procurar na subárvore esquerda
+        if (comparison < 0) {
+            current.left = removeRecursive(current.left, id);
+        }
+        // Caso o ID seja maior, procurar na subárvore direita
+        else if (comparison > 0) {
+            current.right = removeRecursive(current.right, id);
+        }
+        // Encontrou o nó a ser removido
+        else {
+            // Caso 1: Nó com um ou nenhum filho
+            if (current.left == null) {
+                return current.right;
+            } else if (current.right == null) {
+                return current.left;
+            }
+    
+            // Caso 2: Nó com dois filhos
+            // Encontrar o nó mínimo na subárvore direita (sucessor)
+            current.programa = findMin(current.right).programa;
+            // Remover o sucessor recursivamente
+            current.right = removeRecursive(current.right, current.programa.getId());
+        }
+    
+        // Atualizar a altura do nó atual
+    
+        // Verificar o fator de equilíbrio e realizar as rotações necessárias
+        int balance = getBalance(current);
+    
+        // Caso do desequilíbrio à esquerda
+        if (balance > 1) {
+            // Caso de rotação simples à direita ou rotação dupla à esquerda-direita
+            if (getBalance(current.left) >= 0) {
+                return rotateRight(current);
+            } else {
+                current.left = rotateLeft(current.left);
+                return rotateRight(current);
+            }
+        }
+    
+        // Caso do desequilíbrio à direita
+        if (balance < -1) {
+            // Caso de rotação simples à esquerda ou rotação dupla à direita-esquerda
+            if (getBalance(current.right) <= 0) {
+                return rotateLeft(current);
+            } else {
+                current.right = rotateRight(current.right);
+                return rotateLeft(current);
+            }
+        }
+    
+        return current;
+    }
+    
+    private Node findMin(Node node) {
+        // Encontrar o nó mínimo na árvore (nó mais à esquerda)
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+    
 
     public List<ProgramaNetflix> getTopTitles() {
     List<ProgramaNetflix> result = new ArrayList<>();
