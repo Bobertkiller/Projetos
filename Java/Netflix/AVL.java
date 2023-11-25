@@ -418,7 +418,9 @@ public void opcoes_analise() {
                 printPrograms(topTitlesWithCertificationAndGenre);
                 break;
             case 4:
-                getLowestTmdbScoreTitles(5);
+                List<String> allData = getAllDataAsStringList();
+                System.out.println("Dados de todos os programas na Árvore AVL:");
+                allData.forEach(System.out::println);
                 break;
             case 5:
                 displayTop10Movies();
