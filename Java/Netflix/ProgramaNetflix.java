@@ -159,4 +159,9 @@ class ProgramaNetflix {
     public void setTmdbScore(float tmdbScore) {
         this.tmdbScore = tmdbScore;
     }
+
+    @Override
+    public String toString() {
+        return "titulo: '" + titulo + "' | Avaliação: " + imdbScore;
+    }
 }

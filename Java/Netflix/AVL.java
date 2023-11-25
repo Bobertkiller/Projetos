@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 class AVL {
     private Node root;
@@ -133,15 +136,16 @@ class AVL {
         }
     }
 
-    
-
     public List<ProgramaNetflix> getTopTitles() {
     List<ProgramaNetflix> result = new ArrayList<>();
     getTopTitlesRec(root, result);
+    // Sort the result list based on IMDb score in descending order
+    result.sort(Comparator.comparing(ProgramaNetflix::getImdbScore).reversed());
+    // Return the top 5 titles or fewer if the list is smaller
     return result.subList(0, Math.min(result.size(), 5));
 }
 
-    private void getTopTitlesRec(Node root, List<ProgramaNetflix> result) {
+private void getTopTitlesRec(Node root, List<ProgramaNetflix> result) {
     if (root == null) {
         return;
     }
@@ -162,16 +166,18 @@ class AVL {
         return;
     }
 
+    // Traverse left subtree
+    getTitlesReleasedBetweenYearsRec(root.left, startYear, endYear, result);
+
+    // Check if the current node's release year is within the specified range
     if (root.programa.getReleaseYear() >= startYear && root.programa.getReleaseYear() <= endYear) {
-        getTitlesReleasedBetweenYearsRec(root.left, startYear, endYear, result);
         result.add(root.programa);
-        getTitlesReleasedBetweenYearsRec(root.right, startYear, endYear, result);
-    } else if (root.programa.getReleaseYear() < startYear) {
-        getTitlesReleasedBetweenYearsRec(root.right, startYear, endYear, result);
-    } else {
-        getTitlesReleasedBetweenYearsRec(root.left, startYear, endYear, result);
     }
+
+    // Traverse right subtree
+    getTitlesReleasedBetweenYearsRec(root.right, startYear, endYear, result);
 }
+
 
     public List<ProgramaNetflix> getTopTitlesWithCertificationAndGenre(String certification, String genre, int n) {
     List<ProgramaNetflix> topTitles = new ArrayList<>();
@@ -221,38 +227,70 @@ class AVL {
 }
 
 private void displayTop10Movies() {
-    List<ProgramaNetflix> topMovies = getTopMovies(10); // You can adjust the number of movies
+    List<ProgramaNetflix> topMovies = getTopMovies(10);
     System.out.println("Top 10 Movies:");
-    for (ProgramaNetflix movie : topMovies) {
-        System.out.println("Movie: " + movie.getTitulo() + ", IMDb Score: " + movie.getImdbScore());
+
+    if (topMovies.isEmpty()) {
+        System.out.println("No top movies found.");
+    } else {
+        for (ProgramaNetflix movie : topMovies) {
+            System.out.println("Titulo: " + movie.getTitulo() + " | Avaliação: " + movie.getImdbScore());
+        }
     }
 }
 
-    private List<ProgramaNetflix> getTopMovies(int n) {
-    List<ProgramaNetflix> topMovies = new ArrayList<>();
-    getTopMoviesRec(root, topMovies, n);
-    return topMovies;
+private List<ProgramaNetflix> getTopMovies(int n) {
+    List<ProgramaNetflix> result = new ArrayList<>();
+    getTopMoviesRec(root, result, n);
+
+    // Print details of all titles for debugging
+    System.out.println("Details of All Titles:");
+    result.forEach(movie -> System.out.println("Title: " + movie.getTitulo() + " | Show Type: " + movie.getShowType() + " | IMDb Score: " + movie.getImdbScore()));
+
+    // Filter out movies with invalid IMDb scores
+    result = result.stream()
+            .filter(movie -> {
+                boolean isMovie = "MOVIE".equalsIgnoreCase(movie.getShowType());
+                boolean hasValidScore = movie.getImdbScore() > 0;
+                if (!isMovie || !hasValidScore) {
+                    // Print details of excluded titles for debugging
+                    System.out.println("Excluded Title: " + movie.getTitulo() + " | Show Type: " + movie.getShowType() + " | IMDb Score: " + movie.getImdbScore());
+                }
+                return isMovie && hasValidScore;
+            })
+            .collect(Collectors.toList());
+
+    // Sort the result list based on IMDb score in descending order
+    result.sort(Comparator.comparing(ProgramaNetflix::getImdbScore).reversed());
+
+    // Return the top n titles or fewer if the list is smaller
+    return result.subList(0, Math.min(result.size(), n));
 }
 
-    private void getTopMoviesRec(Node root, List<ProgramaNetflix> result, int n) {
-    if (root != null) {
-        // In-order to get movies with the highest IMDb scores first
-        getTopMoviesRec(root.left, result, n);
+private void getTopMoviesRec(Node root, List<ProgramaNetflix> result, int n) {
+    if (root != null && result.size() < n) {
+        // Reverse in-order traversal
+        getTopMoviesRec(root.right, result, n);
 
-        ProgramaNetflix movie = root.programa;
-        result.add(movie);
-
-        if (result.size() == n) {
-            return; // Already found the top N movies
+        ProgramaNetflix content = root.programa;
+        // Check if the content is a movie and has a valid IMDb score before adding it to the result list
+        if ("MOVIE".equalsIgnoreCase(content.getShowType()) && content.getImdbScore() > 0) {
+            result.add(content);
         }
 
-        getTopMoviesRec(root.right, result, n);
+        // Print IMDb score for debugging
+        System.out.println("Title: " + content.getTitulo() + " | IMDb Score: " + content.getImdbScore());
+
+        if (result.size() < n) {
+            // If we haven't reached the required number of movies, continue searching
+            getTopMoviesRec(root.left, result, n);
+        }
     }
 }
 
 private void printPrograms(List<ProgramaNetflix> programas) {
     for (ProgramaNetflix programa : programas) {
-        System.out.println(programa);  // Você pode querer substituir isso pelo formato desejado
+        System.out.println("Título: " + programa.getTitulo() + " | Ano de Lançamento: " + programa.getReleaseYear() + " | Avaliação: " + programa.getImdbScore());  // Você pode querer substituir isso pelo formato desejado
     }
 }
 
@@ -262,7 +300,7 @@ public void opcoes_analise() {
     int option;
 
     do {
-        System.out.println("Opções de Análise:");
+        System.out.println("\nOpções de Análise:");
         System.out.println("1. Top 5 Títulos");
         System.out.println("2. Títulos Lançados Entre Anos X e Y");
         System.out.println("3. Top Títulos com Certificação e Gênero");
@@ -273,6 +311,7 @@ public void opcoes_analise() {
 
         option = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
+        System.out.println("");
 
         switch (option) {
             case 1:
@@ -281,10 +320,13 @@ public void opcoes_analise() {
                 //getTopTitles();
                 break;
             case 2:
-                getTitlesReleasedBetweenYears(2000,2010);
+                List<ProgramaNetflix> titlesBetweenYears = getTitlesReleasedBetweenYears(2000, 2010);
+                System.out.println("Títulos Lançados Entre 2000 e 2010:");
+                printPrograms(titlesBetweenYears);
                 break;
             case 3:
-                getTopTitlesWithCertificationAndGenre("PG", "Comedy", 10);
+                List<ProgramaNetflix> topTitlesWithCertificationAndGenre = getTopTitlesWithCertificationAndGenre("TV-14", "Crime", 10);
+                printPrograms(topTitlesWithCertificationAndGenre);
                 break;
             case 4:
                 getLowestTmdbScoreTitles(5);

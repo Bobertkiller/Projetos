@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,10 +36,76 @@ public class Main {
                     avlTree.opcoes_analise();
                     break;
                 case 3:
-                    // Implemente lógica para inserir programa
+                    // Lê os dados do programa
+                    System.out.print("Informe o ID: ");
+                    String id = scanner.nextLine();
+                    System.out.print("Informe o título: ");
+                    String titulo = scanner.nextLine();
+                    System.out.print("Informe o tipo de programa: ");
+                    String showType = scanner.nextLine();
+                    System.out.print("Coloque a sinopse do programa: ");
+                    String descricao = scanner.nextLine();
+                    System.out.print("Coloque o ano de lançamento: ");
+                    int releaseYear = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Coloque o certificado de idade: ");
+                    String ageCertification = scanner.nextLine();
+                    System.out.print("Coloque quanto ficou ao ar: ");
+                    int runtime = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Coloque qual o gênero: ");
+                    String generos = scanner.nextLine();
+                    System.out.print("Coloque aonde foi produzido: ");
+                    String productionCountries = scanner.nextLine();
+                    System.out.print("Coloque quantas temporadas/continuações: ");
+                    float temporadas = scanner.nextFloat();
+                    scanner.nextLine();
+                    System.out.print("Coloque o ID IMDB: ");
+                    String imdbId = scanner.nextLine();
+                    System.out.print("Coloque a nota IMDB: ");
+                    float imdbScore = scanner.nextFloat();
+                    scanner.nextLine();
+                    System.out.print("Coloque quantos votos teve: ");
+                    float imdbVotes = scanner.nextFloat();
+                    scanner.nextLine();
+                    System.out.print("Coloque o quanto foi popular segundo o TMDB: ");
+                    float tmdbPopularity = scanner.nextFloat();
+                    scanner.nextLine();
+                    System.out.print("Coloque a nota segundo TMDB: ");
+                    float tmdbScore = scanner.nextFloat();
+                    scanner.nextLine();
+
+                    ProgramaNetflix programa = new ProgramaNetflix(id, titulo, showType, descricao, releaseYear, ageCertification, runtime, generos, productionCountries, temporadas, imdbId, imdbScore, imdbVotes, tmdbPopularity, tmdbScore);
+
+                    bstTree.insert(programa);
+                    avlTree.insert(programa);
+
+                    System.out.println("Programa inserido!");
                     break;
+
                 case 4:
-                    // Implemente lógica para buscar programa
+                    // Solicitar ID do usuário
+                    System.out.print("Informe o ID do programa: ");
+                    String programaId = scanner.nextLine();
+
+                    // Buscar na AVL
+                    ProgramaNetflix programaAvl = avlTree.search(programaId);
+
+                    // Buscar na BST
+                    ProgramaNetflix programaBst = bstTree.search(programaId);
+
+                    // Verificar se encontrou em alguma das árvores
+                    if (programaAvl != null) {
+                        // Mostrar dados encontrados na AVL
+                        System.out.println("Dados do programa " + programaAvl.getTitulo() + " encontrados na Árvore AVL:");
+                        System.out.println(programaAvl); // ou imprima os dados desejados
+                    } else if (programaBst != null) {
+                        // Mostrar dados encontrados na BST
+                        System.out.println("Dados do programa " + programaBst.getTitulo() + " encontrados na Árvore BST:");
+                        System.out.println(programaBst); // ou imprima os dados desejados
+                    } else {
+                        System.out.println("Programa com ID " + programaId + " não encontrado em nenhuma árvore.");
+                    }
                     break;
                 case 5:
                     // Implemente lógica para remover programa
@@ -137,7 +202,5 @@ public class Main {
             e.printStackTrace();
         }
     }
-
-    
 
 }
