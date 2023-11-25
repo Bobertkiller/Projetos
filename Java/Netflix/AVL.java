@@ -345,4 +345,24 @@ public void opcoes_analise() {
     scanner.close();
 }
 
+public int getHeight() {
+    return getHeight(root);
+}
+
+    // Inside the AVL class
+public List<String> getAllDataAsStringList() {
+    List<String> result = new ArrayList<>();
+    getAllDataAsStringListRec(root, result);
+    return result;
+}
+
+private void getAllDataAsStringListRec(Node root, List<String> result) {
+    if (root != null) {
+        getAllDataAsStringListRec(root.left, result);
+        result.add(root.programa.toString()); // Assuming you have overridden the toString() method in ProgramaNetflix class
+        getAllDataAsStringListRec(root.right, result);
+    }
+}
+
+
 }

@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -111,10 +113,17 @@ public class Main {
                     // Implemente lógica para remover programa
                     break;
                 case 6:
-                    // Implemente lógica para exibir altura das árvores
+                    // Inside the do-while loop, after the case 6:
+                    System.out.println("Altura da Árvore AVL: " + avlTree.getHeight());
+                    System.out.println("Altura da Árvore BST: " + bstTree.getHeight());
                     break;
                 case 7:
                     // Implemente lógica para salvar dados em arquivo
+                    System.out.print("Informe o nome do arquivo para salvar os dados da AVL: ");
+                    String fileName = scanner.nextLine();
+                    // Save data to the specified file
+                    saveDataToFile(avlTree.getAllDataAsStringList(), fileName);
+                    System.out.println("Dados da AVL salvos com sucesso!");
                     break;
                 case 8:
                     System.out.println("Encerrando a aplicação.");
@@ -202,5 +211,15 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+    private static void saveDataToFile(List<String> data, String fileName) {
+    try (PrintWriter writer = new PrintWriter(fileName)) {
+        for (String line : data) {
+            writer.println(line);
+        }
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+}
 
 }
