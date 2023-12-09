@@ -1,2 +1,2 @@
 # Projetos
-Dump de projetos
+Repositorio, direcionado para diversos projetos realizados para tarefas da Faculdade.
